@@ -122,3 +122,51 @@ The main way to query Elasticsearch is through their Query DSL (domain specific 
 
 Search Types
 ------------
+* Term
+	* This looks for an exact match of a word in a specific field
+* Terms
+	* This looks for an exact match of a work in multiple fields
+* Match
+	* This parses the search term and constructs a query. As an example “great gatsby” would match a field that has “great” or “gatsby”. It is possible to modify the boolean operator to an ‘or’ or add fuzziness
+* Multi Match
+	* Same as match but looks across multiple fields
+* Phrase Match
+	* Similar to match, but it works with a phrase instead of breaking up the words
+* Query String
+	* This allows for the use of a Lucene query. This is handy if you have existing Lucene experience, or if the user wants to construct a complicated query.
+* Prefix
+	* Searches for matches at the beginning of a word.
+* Fuzzy
+	* Looks for a close match based on edit distance.
+* etc
+
+Filters
+-------
+Filters are a way to select a subset of data as part of a query. They can be used include or exclude data from the query. They do not impact the scoring of the results (how relevant the result is to the query). They should be used instead of a query if the criteria is not important to the score of the result.
+
+```
+{
+	“filter” : {
+		“bool” : {
+			“must” : { 
+				“term” : { “user” : “pzerkel” }
+			}
+		}
+	}
+}
+```
+
+Filter Types
+------------
+* Term
+	* Similar to the Term query
+* Terms
+	* Similar to the Terms query
+* Bool
+	* Boolean combinations of other filters
+* Range
+	* Filters a field to be within a certain range
+* Script
+	* Allows for a parameterized script to be used as a filter
+* etc
+
