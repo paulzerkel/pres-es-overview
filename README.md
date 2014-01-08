@@ -15,7 +15,7 @@ At its core, Elasticsearch is an open, distributed, and document oriented full t
 Features
 --------
 * Full text search engine
-	* The main use of Elasticsearch is searching, and that is powered by the open source project Lucene. Lucene is an implementation of an inverted index. In a nutshell, an (inverted index)[http://en.wikipedia.org/wiki/Inverted_index] is a data structure that maps data (in this case words) to its location (in this case documents). This data structure allows you to quickly find what documents contain certain data.
+	* The main use of Elasticsearch is searching, and that is powered by the open source project Lucene. Lucene is an implementation of an inverted index. In a nutshell, an [inverted index](http://en.wikipedia.org/wiki/Inverted_index) is a data structure that maps data (in this case words) to its location (in this case documents). This data structure allows you to quickly find what documents contain certain data.
 * Open source
 	* Elasticsearch is licensed as open source under the Apache 2 license. This is a permissive license that allows for commercial use and modification without royalties to the original authors.
 * Distributed
@@ -29,7 +29,7 @@ Features
 
 Requirements
 ------------
-Elasticsearch (and the underlying engine, Lucene) are written in Java and requires (Java 6)[http://www.oracle.com/technetwork/java/javase/downloads/index.html] or higher to run. You can download and install Java, or if you have it installed you can easily check your version with the following command:
+Elasticsearch (and the underlying engine, Lucene) are written in Java and requires [Java 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or higher to run. You can download and install Java, or if you have it installed you can easily check your version with the following command:
 
 `$java -version
 
