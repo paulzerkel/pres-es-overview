@@ -110,13 +110,15 @@ Once data is added to an index it can be searched for. Searching can be accompli
 
 The main way to query Elasticsearch is through their Query DSL (domain specific language). The DSL is a JSON document that describes how the search should be put together.
 
-`{
+```
+{
 	“query” : {
 		“term” : {
 			“title” : “gatsby”
 		}
 	}
-}`
+}
+```
 
 Search Types
 ------------
