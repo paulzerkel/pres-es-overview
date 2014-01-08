@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>An overview of Elasticsearch</title>
+
+		<meta name="description" content="A lunch presentation about Elasticsearch and Nest, the .NET client library.">
+		<meta name="author" content="Paul Zerkel">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>An overview of Elasticsearch</h1>
+					<p>
+						<small>1/8/2014</small>
+					</p>
+				</section>
+				
+				<section>
+					<h2>Topics</h2>
+					<ul>
+						<li>Overview of Elasticsearch</li>
+						<li>Storage concepts</li>
+						<li>Queries and Filters</li>
+						<li>Nest, a .NET client library</li>
+					</ul>
+				</section>
+				
+				<section>
+					<h2>Overview</h2>
+					<p>What is Elasticsearch?</p>
+					<p>At its core, Elasticsearch is an open, distributed, and document oriented full text search engine that indexes data in real time through a RESTful API.</p>
+					<br>
+					<h3 class="fragment">Buzzword Bingo!</h3>
+				</section>
+
+				<section>
+					<h2>Features</h2>
+					<ul>
+						<li>Full text search engine</li>
+						<li>Open source</li>
+						<li>Distributed</li>
+						<li>Document oriented</li>
+						<li>RESTful API</li>
+						<li>Real-time</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Requirements</h2>
+					<p>Elasticsearch (and the underlying engine, Lucene) are written in Java and requires Java 6 or higher to run. You can <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">download</a> and install Java, or if you have it installed you can easily check your version with the following command:</p>
+					<code>$java -version</code>
+					<p>That is the only requirement for Elasticsearch.</p>
+				</section>
+
+				<section>
+					<h2>Installation &amp; Running</h2>
+					<p><a href="http://www.elasticsearch.org/download" target="_blank">Download Elasticsearch</a> and extract it onto your computer. After that, navigate to the location you installed it and run:</p>
+					<code>$bin/elasticsearch -f</code>
+					<p>or on a Windows machine:</p>
+					<code>bin\elasticsearch.bat</code>
+				</section>
+
+				<section>
+					<h2>Testing the New Instance</h2>
+					<p>You can check to see that Elasticsearch is up and running. Once it is started open a new browser window and navigate to <a href="http://localhost:9200" target="_blank">http://localhost:9200</a></p>
+					<p>If everything is working properly you should see a JSON document with information describing the running instance of Elasticsearch.</p>
+				</section>
+
+				<section>
+					<h2>Sidenote - cURL</h2>
+					<p>cURL is a command line tool that can be used to transfer data across many protocols such as HTTP. It is often used to quickly interact with RESTful APIs. You will see it in much of the Elasticsearch documentation.</p>
+				</section>
+
+				<section>
+					<h2>Documents</h2>
+					<p>Data that is added to Elasticsearch is called a document. Documents are represented in JSON format and you are not required to create a schema before adding it.</p>
+				</section>
+
+				<section>
+					<h2>Document Example</h2>
+					<pre><code>
+{
+	"id": "1",
+	"title": "Ulysses",
+	"author": "James Joyce",
+	"publish_date": "1922-02-02",
+	"description": "Ulysses is a modernist novel by James Joyce."
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Indexes</h2>
+					<p>Elasticsearch stores data in an index. Elasticsearch can contain multiple indexes to separate data and an index can also be sharded across multiple nodes in a cluster. A search can span multiple indexes.</p>
+					<div class="fragment">
+						<p>Indexes can be created and deleted within Elasticsearch.</p>
+						<code>$curl -XPOST http://localhost:9200/library/</code>
+						<code>$curl -XDELETE http://localhost:9200/library/</code>
+					</div>
+				</section>
+
+				<section>
+					<h2>Types</h2>
+					<p>A type is how you keep documents with different schemas separate. As an example, if you had an ecommerce site, you might create an index containing documents of a Product type and also a Review type.</p>
+					<p>Each of these would have different data structures, but could be included together in a search.</p>
+				</section>
+
+				<section>
+					<h2>Analysis</h2>
+					<p>Documents that are added must be analyzed so that they can be searched for. This analysis work is done by an Analyzer and can be configured per field in the document.</p>
+					<p>There are multiple analyzers that are built in and are useful for different circumstances. It is also possible to turn off analysis for a field if you do not want the field to be indexed.</p>
+				</section>
+
+				<section>
+					<h2>API Basics - CRUD Operations</h2>
+					<p>It is possible to Create, Read, Update, and Delete documents within an index. In addition you can bulk load data into an index.</p>
+					<p>By default, Elasticsearch will store the entire source of a document in a special field named _source. This is required for certain operations, such as an update.</p>
+				</section>
+
+				<section>
+					<h2>Searching</h2>
+					<p>Once data is added to an index it can be searched for. Searching can be accomplished either through the the URL or via a GET with a JSON body.</p>
+					<p>The main way to query Elasticsearch is through their Query DSL (domain specific language). The DSL is a JSON document that describes how the search should be put together.</p>
+					<pre><code>
+{
+  "query" : {
+    "term" : {
+      "title" : "gatsby"
+    }
+  }
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Search Types</h2>
+					<ul>
+						<li>Term</li>
+						<li>Terms</li>
+						<li>Match</li>
+						<li>Multi Match</li>
+						<li>Phrase Match</li>
+						<li>Query String</li>
+						<li>Prefix</li>
+						<li>Fuzzy</li>
+						<li>etc</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Filters</h2>
+					<p>Filters are a way to select a subset of data as part of a query. They can be used include or exclude data from the query. They do not impact the scoring of the results (how relevant the result is to the query). They should be used instead of a query if the criteria is not important to the score of the result.</p>
+					<pre><code>
+{
+  "filter" : {
+    "bool" : {
+      "must" : { 
+        "term" : { "user" : "pzerkel" }
+      }
+    }
+  }
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Filter Types</h2>
+					<ul>
+						<li>Term</li>
+						<li>Terms</li>
+						<li>Bool</li>
+						<li>Range</li>
+						<li>Script</li>
+						<li>etc</li>
+					</ul>
+				</section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
