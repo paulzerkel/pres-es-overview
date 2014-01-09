@@ -170,3 +170,14 @@ Filter Types
 	* Allows for a parameterized script to be used as a filter
 * etc
 
+Misc. Notes
+-----------
+While Nest is a pretty nice client library, the documentation is not always kept up to date. If you're looking for a specific example and it is not in their documents, take a look at their unit tests on Github. I found the unit tests were often more up-to-date and useful.
+
+External Resources
+------------------
+* [Elasticsearch Project](http://www.elasticsearch.org/)
+* [Elasticsearch Guide](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/index.html)
+* [Nest on Github](https://github.com/Mpdreamz/NEST/)
+* [Nest Documentation[(http://nest.azurewebsites.net/)
+* [Elasticsearch Server Book](http://www.packtpub.com/elasticsearch-server-for-fast-scalable-flexible-search-solution/book)
