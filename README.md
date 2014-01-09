@@ -179,5 +179,5 @@ External Resources
 * [Elasticsearch Project](http://www.elasticsearch.org/)
 * [Elasticsearch Guide](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/index.html)
 * [Nest on Github](https://github.com/Mpdreamz/NEST/)
-* [Nest Documentation[(http://nest.azurewebsites.net/)
+* [Nest Documentation](http://nest.azurewebsites.net/)
 * [Elasticsearch Server Book](http://www.packtpub.com/elasticsearch-server-for-fast-scalable-flexible-search-solution/book)
