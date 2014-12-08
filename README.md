@@ -47,7 +47,7 @@ or on a Windows machine:
 
 * You will see information about Elasticsearch starting up and at this point Elasticsearch will be running with default options. In the log messages displayed, you’ll see the IP and port that it is listening on. The port defaults to 9200. Elasticsearch can also be ran as a service, which is desirable when running on a server.
 
-Teesting the New Instance
+Testing the New Instance
 -------------------------
 You can check to see that Elasticsearch is up and running. Once it is started open a new browser window and navigate to [http://localhost:9200](http://localhost:9200).
 
