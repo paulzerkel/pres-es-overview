@@ -1,23 +1,25 @@
-An Overview of Elasticsearch and Nest
-=====================================
+# An Overview of Elasticsearch and Nest
+This is a lunch presentation on the Elasticsearch project as well as Nest, a client library for .NET. Notes for the presentation are below.
 
-NOTE
-----
+## Caution!
 This presentation is probably out of date.
 
-This is a lunch presentation on the Elasticsearch project as well as Nest, 
-a client library for .NET. Notes for the presentation are below.
+## Overview
+The presentation is built with [Reveal.js](https://github.com/hakimel/reveal.js) and hosted on GitHub Pages: http://paulzerkel.github.io/pres-es-overview/
 
-Overview
---------
+Edit the root `index.html` file to change the presentation. All of the files for Reveal.js are in `/reveal`. The gh-pages branch contains the live site.
+
+## Notes
+Notes for the presentation are below.
+
+### Overview
 What is Elasticsearch?
 
 At its core, Elasticsearch is an open, distributed, and document oriented full text search engine that indexes data in real time through a RESTful API.
 
 * In other words, Elasticsearch is an application that allows for the indexing and advanced searching of structured information.
 
-Features
---------
+### Features
 * Full text search engine
 	* The main use of Elasticsearch is searching, and that is powered by the open source project Lucene. Lucene is an implementation of an inverted index. In a nutshell, an [inverted index](http://en.wikipedia.org/wiki/Inverted_index) is a data structure that maps data (in this case words) to its location (in this case documents). This data structure allows you to quickly find what documents contain certain data.
 * Open source
@@ -31,16 +33,14 @@ Features
 * Real time
 	* As data is added it is immediately available as the results of the search. Its overall speed makes it great for use on modern web applications.
 
-Requirements
-------------
+### Requirements
 Elasticsearch (and the underlying engine, Lucene) are written in Java and requires [Java 6](http://www.oracle.com/technetwork/java/javase/downloads/index.html) or higher to run. You can download and install Java, or if you have it installed you can easily check your version with the following command:
 
 `$java -version`
 
 That is the only requirement for Elasticsearch.
 
-Installation & Running
-----------------------
+### Installation & Running
 [Download Elasticsearch](http://www.elasticsearch.org/download) and extract it onto your computer. After that, navigate to the location you installed it and run:
 
 `$bin/elasticsearch -f`
@@ -51,26 +51,22 @@ or on a Windows machine:
 
 * You will see information about Elasticsearch starting up and at this point Elasticsearch will be running with default options. In the log messages displayed, you’ll see the IP and port that it is listening on. The port defaults to 9200. Elasticsearch can also be ran as a service, which is desirable when running on a server.
 
-Testing the New Instance
--------------------------
+### Testing the New Instance
 You can check to see that Elasticsearch is up and running. Once it is started open a new browser window and navigate to [http://localhost:9200](http://localhost:9200).
 
 If everything is working properly you should see a JSON document with information describing the running instance of Elasticsearch.
 
-Sidenote - cURL
----------------
+### Sidenote - cURL
 cURL is a command line tool that can be used to transfer data across many protocols such as HTTP. It is often used to quickly interact with RESTful APIs. You will see it in much of the Elasticsearch documentation.
 
 * The examples in this presentation make use of it as will many online examples. cURL is available for many platforms including Windows, Linux and OS X. It is a worthwhile tool to have around.
 
-Documents
----------
+### Documents
 Data that is added to Elasticsearch is called a document. Documents are represented in JSON format and you are not required to create a schema before adding it.
 
 * The JSON document can represent different data,types (which Elasticsearch will infer for the schema) as well as nested objects, which is supported.
 
-Indexes
--------
+### Indexes
 Elasticsearch stores data in an index. Elasticsearch can contain multiple indexes to separate data and an index can also be sharded across multiple nodes in a cluster. A search can span multiple indexes.
 
 Indexes can be created and deleted within Elasticsearch.
@@ -82,15 +78,13 @@ Indexes can be created and deleted within Elasticsearch.
 * Multiple indexes and shards allow for data partitioning amongst one or more nodes
 * Located under the /data directory
 
-Types
------
+### Types
 A type is how you keep documents with different schemas separate. As an example, if you had an ecommerce site, you might create an index containing documents of a Product type and also a Review type. Each of these would have different data structures, but could be included together in a search.
 
 * Schemas can be manually created or inferred
 * Schemas define data types, analyzers, multifields, etc
 
-Analysis
---------
+### Analysis
 Documents that are added must be analyzed so that they can be searched for. This analysis work is done by an Analyzer and can be configured per field in the document. 
 
 There are multiple analyzers that are built in and are useful for different circumstances. It is also possible to turn off analysis for a field if you do not want the field to be indexed.
@@ -100,16 +94,14 @@ There are multiple analyzers that are built in and are useful for different circ
 * Pattern - allows for text to be separated by regular expressions
 * Keyword - indexes for an exact match only - same as not_analyzed
 
-API Basics - CRUD Operations
-----------------------------
+### API Basics - CRUD Operations
 It is possible to Create, Read, Update, and Delete documents within an index. In addition you can bulk load data into an index.
 
 By default, Elasticsearch will store the entire source of a document in a special field named _source. This is required for certain operations, such as an update.
 
 * Data isn’t actually updated in the index - the source is used to create a new document with the change merged in, and then the original document is removed.
 
-Searching
----------
+### Searching
 Once data is added to an index it can be searched for. Searching can be accomplished either through the the URL or via a GET with a JSON body.
 
 The main way to query Elasticsearch is through their Query DSL (domain specific language). The DSL is a JSON document that describes how the search should be put together.
@@ -124,8 +116,7 @@ The main way to query Elasticsearch is through their Query DSL (domain specific 
 }
 ```
 
-Search Types
-------------
+### Search Types
 * Term
 	* This looks for an exact match of a word in a specific field
 * Terms
@@ -144,8 +135,7 @@ Search Types
 	* Looks for a close match based on edit distance.
 * etc
 
-Filters
--------
+### Filters
 Filters are a way to select a subset of data as part of a query. They can be used include or exclude data from the query. They do not impact the scoring of the results (how relevant the result is to the query). They should be used instead of a query if the criteria is not important to the score of the result.
 
 ```
@@ -160,8 +150,7 @@ Filters are a way to select a subset of data as part of a query. They can be use
 }
 ```
 
-Filter Types
-------------
+### Filter Types
 * Term
 	* Similar to the Term query
 * Terms
@@ -174,12 +163,10 @@ Filter Types
 	* Allows for a parameterized script to be used as a filter
 * etc
 
-Misc. Notes
------------
+### Misc. Notes
 While Nest is a pretty nice client library, the documentation is not always kept up to date. If you're looking for a specific example and it is not in their documents, take a look at their unit tests on Github. I found the unit tests were often more up-to-date and useful.
 
-External Resources
-------------------
+### External Resources
 * [Elasticsearch Project](http://www.elasticsearch.org/)
 * [Elasticsearch Guide](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/index.html)
 * [Nest on Github](https://github.com/Mpdreamz/NEST/)
